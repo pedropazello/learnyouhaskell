@@ -59,4 +59,49 @@ capital "" = "Empty string, whoops!"
 capital all@(x:xs) = "The first letter of "
                    ++ all ++ " is " ++ [x]
 
--- stop in guards, guards!
+max' :: (Ord a) => a -> a -> a
+max' a b
+     | a > b     = a
+     | otherwise = b
+
+myCompare :: (Ord a) => a -> a -> Ordering
+a `myCompare` b
+    | a > b     = GT
+    | a == b    = EQ
+    | otherwise = LT
+
+bmiTell :: (RealFloat a) => a -> a -> String
+bmiTell weight height
+    | bmi <= skinny = "You're underwight, you emo, you!"
+    | bmi <= normal = "You're supposedly normal. Pff, I bet you're ugly!"
+    | bmi <= fat    = "You're fat! Lose some weight, fatty!"
+    | otherwise     = "You're a whale, congratulations!"
+    where bmi = weight / height ^ 2
+          (skinny, normal, fat) = (18.5, 25.0, 30.0)
+
+initials :: String -> String -> String
+initials firstname lastname = [f] ++ ". "  ++ [l] ++ "."
+    where (f:_) = firstname
+          (l:_) = lastname
+
+cylinder :: (RealFloat a) => a -> a -> a
+cylinder r h = 
+     let sideArea = 2 * pi * r * h
+         topArea  = pi * r ^ 2
+     in sideArea + 2 * topArea
+
+head2 :: [a] -> a
+head2 xs = case xs of [] -> error "No head for empty lists!"
+                      (x:_) -> x
+
+describeList :: [a] -> String
+describeList xs = "The list is "  ++ case xs of 
+                  []  -> "empty"
+                  [x] -> "a single list."
+                  xs  -> "a longer list."
+
+describeList'   :: [a] -> String
+describeList' xs = "The list is " ++ what xs
+          where what []  = "empty."
+                what [x] = "a singleton list."
+                what xs  = "a longer list."
